@@ -1,0 +1,61 @@
+{
+  "name": "copy-for-llm",
+  "displayName": "Copy For LLM",
+  "description": "copy text with the filename to provide better context to your llm easily",
+  "icon": "demo-assets/CopyForLLMLogo.png",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": ["onCommand:copy-for-llm.copyWithFilename"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "copy-for-llm.copyWithFilename",
+        "title": "Copy For LLM: Copy With Filename"
+      },
+      {
+        "command": "copy-for-llm.copyWithCustomText",
+        "title": "Copy For LLM: Copy With Custom Prefix"
+      },
+      {
+        "command": "copy-for-llm.setCustomText",
+        "title": "Copy For LLM: Set Custom Prefix"
+      }
+    ]
+  },
+  "keybindings": [
+    {
+        "command": "copy-for-llm.copyWithFilename",
+        "key": "ctrl+alt+cmd+c",
+        "mac": "ctrl+alt+cmd+c",
+        "when": "editorTextFocus"
+    }
+],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.3",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.84.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "eslint": "^8.52.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+  }
+}
