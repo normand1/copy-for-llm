@@ -4,7 +4,7 @@
   "description": "copy text with the filename to provide better context to your llm easily",
   "publisher": "HyperCatcher",
   "icon": "demo-assets/CopyForLLMLogo.png",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "repository": "https://github.com/normand1/copy-for-llm",
   "engines": {
     "vscode": "^1.84.0"
@@ -12,7 +12,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": ["onCommand:copy-for-llm.copyWithFilename"],
+  "activationEvents": [
+    "onCommand:copy-for-llm.copyWithFilename"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -32,12 +34,12 @@
   },
   "keybindings": [
     {
-        "command": "copy-for-llm.copyWithFilename",
-        "key": "ctrl+alt+cmd+c",
-        "mac": "ctrl+alt+cmd+c",
-        "when": "editorTextFocus"
+      "command": "copy-for-llm.copyWithFilename",
+      "key": "ctrl+alt+cmd+c",
+      "mac": "ctrl+alt+cmd+c",
+      "when": "editorTextFocus"
     }
-],
+  ],
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -58,6 +60,5 @@
     "mocha": "^10.2.0",
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
