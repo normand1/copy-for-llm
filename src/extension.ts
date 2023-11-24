@@ -7,17 +7,27 @@ export function activate(context: vscode.ExtensionContext) {
     let disposableCopyWithFilename = vscode.commands.registerCommand('copy-for-llm.copyWithFilename', async () => {
         // Get the active text editor
         const editor = vscode.window.activeTextEditor;
-
+    
         if (editor) {
             try {
+                // Get the selected text
                 const selectedText = editor.document.getText(editor.selection);
                 const fileName = editor.document.fileName.split('/').pop();
     
-                // Use the customText variable instead of fetching from settings
-                const textToCopy = `${fileName}:\n \`\`\`${selectedText}\`\`\``;
+                // Get line numbers
+                const startLine = editor.selection.start.line + 1; // Adding 1 to make it 1-indexed
+                const endLine = editor.selection.end.line + 1;
+    
+                // Format text with line numbers
+                let textToCopy = `${fileName}:\n`;
+                if (startLine === endLine) {
+                    textToCopy += `Line ${startLine}:\n\`\`\`${selectedText}\`\`\``;
+                } else {
+                    textToCopy += `Lines ${startLine}-${endLine}:\n\`\`\`${selectedText}\`\`\``;
+                }
     
                 await vscode.env.clipboard.writeText(textToCopy);
-                vscode.window.showInformationMessage('Custom text and selected text copied to clipboard');
+                vscode.window.showInformationMessage('Filename, line numbers, and selected text copied to clipboard');
             } catch (error) {
                 console.error('Error writing to clipboard:', error);
                 vscode.window.showErrorMessage('Failed to write to clipboard.');
@@ -26,7 +36,6 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage('No active editor with selected text.');
         }
     });
-
 
     let disposableCopyWithCustomText = vscode.commands.registerCommand('copy-for-llm.copyWithCustomText', async () => {
         // Get the active text editor
@@ -66,7 +75,7 @@ let disposableSetCustomText = vscode.commands.registerCommand('copy-for-llm.setC
     }
 });
 
-    context.subscriptions.push(disposableCopyWithFilename, disposableSetCustomText);
+    context.subscriptions.push(disposableCopyWithFilename, disposableSetCustomText, disposableCopyWithCustomText);
 }
 
 export function deactivate() {}

@@ -2,8 +2,10 @@
   "name": "copy-for-llm",
   "displayName": "Copy For LLM",
   "description": "copy text with the filename to provide better context to your llm easily",
+  "publisher": "HyperCatcher",
   "icon": "demo-assets/CopyForLLMLogo.png",
   "version": "0.0.1",
+  "repository": "https://github.com/normand1/copy-for-llm",
   "engines": {
     "vscode": "^1.84.0"
   },

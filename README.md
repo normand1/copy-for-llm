@@ -17,4 +17,8 @@ Select the text you want to copy over to your LLM chat interface and press `ctr+
 
 Initial release of Copy For LLM!
 
+### 1.0.1
+
+Initial release of Copy For LLM!
+
 ---
