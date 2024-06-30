@@ -7,7 +7,7 @@
   "version": "1.0.1",
   "repository": "https://github.com/normand1/copy-for-llm",
   "engines": {
-    "vscode": "^1.84.0"
+    "vscode": "^1.70.0"
   },
   "categories": [
     "Other"
@@ -20,15 +20,19 @@
     "commands": [
       {
         "command": "copy-for-llm.copyWithFilename",
-        "title": "Copy For LLM: Copy With Filename"
+        "title": "Copy For LLM: With File Metadata"
       },
       {
-        "command": "copy-for-llm.copyWithCustomText",
-        "title": "Copy For LLM: Copy With Custom Prefix"
+        "command": "copy-for-llm.toggleRelativePath",
+        "title": "Copy For LLM: Toggle Relative Path / Filename"
       },
       {
-        "command": "copy-for-llm.setCustomText",
-        "title": "Copy For LLM: Set Custom Prefix"
+        "command": "copy-for-llm.copyEntireFile",
+        "title": "Copy For LLM: Copy Entire File"
+      },
+      {
+        "command": "copy-for-llm.copyAllFilesInFolder",
+        "title": "Copy For LLM: Copy All Files in Current Folder"
       }
     ]
   },
