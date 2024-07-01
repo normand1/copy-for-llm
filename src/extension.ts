@@ -177,13 +177,88 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    let disposableAddFileToList = vscode.commands.registerCommand('copy-for-llm.addFileToList', async (uri: vscode.Uri) => {
+        if (uri && uri.fsPath) {
+            const config = vscode.workspace.getConfiguration('copyForLLM');
+            const filePaths = config.get<string[]>('filePaths', []);
+            
+            const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
+            let relativePath = uri.fsPath;
+            
+            if (workspaceFolder) {
+                relativePath = path.relative(workspaceFolder.uri.fsPath, uri.fsPath);
+            }
+            
+            if (!filePaths.includes(relativePath)) {
+                filePaths.push(relativePath);
+                await config.update('filePaths', filePaths, vscode.ConfigurationTarget.Global);
+                vscode.window.showInformationMessage(`Added ${relativePath} to Copy For LLM file list`);
+            } else {
+                vscode.window.showInformationMessage(`${relativePath} is already in the Copy For LLM file list`);
+            }
+        }
+    });
+
+    let disposableCopyAllFileContents = vscode.commands.registerCommand('copy-for-llm.copyAllFileContents', async () => {
+        const config = vscode.workspace.getConfiguration('copyForLLM');
+        const filePaths = config.get<string[]>('filePaths', []);
+
+        if (filePaths.length === 0) {
+            vscode.window.showWarningMessage('No files in the Copy For LLM list. Right-click on files and select "Add to Copy For LLM File List" to add them.');
+            return;
+        }
+
+        let allFileContents = '';
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+
+        for (const filePath of filePaths) {
+            try {
+                const fullPath = path.isAbsolute(filePath) 
+                    ? filePath 
+                    : workspaceFolder 
+                        ? path.join(workspaceFolder.uri.fsPath, filePath)
+                        : filePath;
+
+                const fileContent = fs.readFileSync(fullPath, 'utf8');
+                let fileMetadata = '';
+
+                if (toggleRelativePath && workspaceFolder) {
+                    const relativePath = path.relative(workspaceFolder.uri.fsPath, fullPath);
+                    fileMetadata = `${relativePath}:\n`;
+                } else {
+                    fileMetadata = `${path.basename(fullPath)}:\n`;
+                }
+
+                allFileContents += `${fileMetadata}\`\`\`\n${fileContent}\n\`\`\`\n\n`;
+            } catch (error) {
+                console.error(`Error reading file ${filePath}:`, error);
+                vscode.window.showErrorMessage(`Failed to read file: ${filePath}`);
+            }
+        }
+
+        if (allFileContents) {
+            await vscode.env.clipboard.writeText(allFileContents);
+            vscode.window.showInformationMessage('All specified file contents copied to clipboard');
+        } else {
+            vscode.window.showErrorMessage('No file contents were copied to clipboard');
+        }
+    });
+
+    let disposableOpenFileListSettings = vscode.commands.registerCommand('copy-for-llm.openFileListSettings', () => {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'copyForLLM.filePaths');
+    });
+
+
     context.subscriptions.push(
         disposableCopyWithFilename, 
         disposableSetCustomText, 
         disposableCopyWithCustomText, 
         disposableToggleRelativePath,
         disposableCopyEntireFile,
-        disposableCopyAllFilesInFolder 
+        disposableCopyAllFilesInFolder,
+        disposableCopyAllFileContents,
+        disposableAddFileToList,
+        disposableOpenFileListSettings
     );
 }
 
