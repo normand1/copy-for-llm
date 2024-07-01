@@ -4,40 +4,46 @@
   "description": "copy text with the filename to provide better context to your llm easily",
   "publisher": "HyperCatcher",
   "icon": "demo-assets/CopyForLLMLogo.png",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "repository": "https://github.com/normand1/copy-for-llm",
   "engines": {
-    "vscode": "^1.84.0"
+    "vscode": "^1.70.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": ["onCommand:copy-for-llm.copyWithFilename"],
+  "activationEvents": [
+    "onCommand:copy-for-llm.copyWithFilename"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "copy-for-llm.copyWithFilename",
-        "title": "Copy For LLM: Copy With Filename"
+        "title": "Copy For LLM: With File Metadata"
       },
       {
-        "command": "copy-for-llm.copyWithCustomText",
-        "title": "Copy For LLM: Copy With Custom Prefix"
+        "command": "copy-for-llm.toggleRelativePath",
+        "title": "Copy For LLM: Toggle Relative Path / Filename"
       },
       {
-        "command": "copy-for-llm.setCustomText",
-        "title": "Copy For LLM: Set Custom Prefix"
+        "command": "copy-for-llm.copyEntireFile",
+        "title": "Copy For LLM: Copy Entire File"
+      },
+      {
+        "command": "copy-for-llm.copyAllFilesInFolder",
+        "title": "Copy For LLM: Copy All Files in Current Folder"
       }
     ]
   },
   "keybindings": [
     {
-        "command": "copy-for-llm.copyWithFilename",
-        "key": "ctrl+alt+cmd+c",
-        "mac": "ctrl+alt+cmd+c",
-        "when": "editorTextFocus"
+      "command": "copy-for-llm.copyWithFilename",
+      "key": "ctrl+alt+cmd+c",
+      "mac": "ctrl+alt+cmd+c",
+      "when": "editorTextFocus"
     }
-],
+  ],
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -58,6 +64,5 @@
     "mocha": "^10.2.0",
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
