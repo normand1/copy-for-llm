@@ -4,10 +4,10 @@
   "description": "copy text with the filename to provide better context to your llm easily",
   "publisher": "HyperCatcher",
   "icon": "demo-assets/CopyForLLMLogo.png",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "repository": "https://github.com/normand1/copy-for-llm",
   "engines": {
-    "vscode": "^1.70.0"
+    "vscode": "^1.84.0"
   },
   "categories": [
     "Other"
@@ -33,8 +33,41 @@
       {
         "command": "copy-for-llm.copyAllFilesInFolder",
         "title": "Copy For LLM: Copy All Files in Current Folder"
+      },
+      {
+        "command": "copy-for-llm.copyAllFileContents",
+        "title": "Copy For LLM: Copy Contents of File List"
+      },
+      {
+        "command": "copy-for-llm.addFileToList",
+        "title": "Add to Copy For LLM File List"
+      },
+      {
+        "command": "copy-for-llm.openFileListSettings",
+        "title": "Copy For LLM: Open File List Settings"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "copy-for-llm.addFileToList",
+          "group": "YourExtensionGroup@1"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Copy For LLM",
+      "properties": {
+        "copyForLLM.filePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Specify file paths to be copied when using the 'Copy All Specified File Contents' command"
+        }
+      }
+    }
   },
   "keybindings": [
     {
