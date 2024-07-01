@@ -22,7 +22,6 @@ const mocha = new Mocha({
 	});
 ```
 
-
 ## Features
 
 ### 1. Copy with File Metadata
